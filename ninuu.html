@@ -2,382 +2,1314 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <title>Kalkulator Kompleks</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Djibril Sepri Ramadhan | Portfolio & CV</title>
+
   <style>
+    :root {
+      --bg: #050816;
+      --bg-alt: #0b1020;
+      --card: #0f172a;
+      --accent: #4f46e5;
+      --accent-soft: rgba(79, 70, 229, 0.18);
+      --accent-strong: #6366f1;
+      --border: #1f2937;
+      --text: #f9fafb;
+      --muted: #9ca3af;
+      --danger: #ef4444;
+    }
+
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
     body {
-      margin: 0;
+      background: radial-gradient(circle at top, #111827 0, #020617 45%, #000 100%);
+      color: var(--text);
       min-height: 100vh;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* ===== LAYOUT ===== */
+
+    .wrapper {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 16px 40px;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(18px);
+      background: rgba(2, 6, 23, 0.9);
+      border-bottom: 1px solid rgba(55,65,81,0.6);
+    }
+
+    .nav {
       display: flex;
       align-items: center;
-      justify-content: center;
-      background: #121212;
-    }
-
-    .calculator {
-      background: #1f1f1f;
-      padding: 20px;
-      border-radius: 16px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-      width: 360px;
-      color: #f1f1f1;
-    }
-
-    .calc-header {
-      display: flex;
       justify-content: space-between;
+      padding: 10px 16px;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .nav-left {
+      display: flex;
       align-items: center;
-      margin-bottom: 8px;
-    }
-
-    .calc-title {
-      font-size: 16px;
-      font-weight: 600;
-    }
-
-    .memory-indicator {
-      font-size: 12px;
-      opacity: 0.8;
-    }
-
-    #display {
-      width: 100%;
-      padding: 12px 10px;
-      font-size: 24px;
-      border-radius: 10px;
-      border: none;
-      outline: none;
-      text-align: right;
-      background: #262626;
-      color: #f1f1f1;
-      margin-bottom: 10px;
-    }
-
-    .buttons {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 8px;
     }
 
-    button {
-      border: none;
-      padding: 10px;
-      font-size: 15px;
-      border-radius: 8px;
-      cursor: pointer;
-      background: #2c2c2c;
-      color: #f1f1f1;
-      transition: transform 0.05s ease, box-shadow 0.05s ease, background 0.15s ease;
-    }
-
-    button:active {
-      transform: translateY(1px);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.6) inset;
-    }
-
-    button.operator {
-      background: #3949ab;
-    }
-
-    button.equal {
-      background: #ffb300;
-      grid-column: span 2;
-      font-weight: 600;
-    }
-
-    button.ac {
-      background: #d32f2f;
-    }
-
-    button.fn {
-      background: #424242;
-      font-size: 13px;
-    }
-
-    button.memory {
-      background: #37474f;
-      font-size: 13px;
-    }
-
-    .history {
-      max-height: 100px;
-      overflow-y: auto;
-      margin-top: 12px;
-      padding-top: 8px;
-      border-top: 1px solid #333;
-      font-size: 12px;
-      color: #bdbdbd;
-    }
-
-    .history-item {
+    .nav-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      border: 2px solid var(--accent);
       display: flex;
-      justify-content: space-between;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      background: radial-gradient(circle at 30% 0%, #4f46e5 0, #0b1020 45%, #020617 100%);
+    }
+
+    .nav-title {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .nav-sub {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .nav-menu {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 13px;
+    }
+
+    .nav-menu a {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.16s ease;
+      white-space: nowrap;
+    }
+
+    .nav-menu a:hover,
+    .nav-menu a.active {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      color: var(--text);
+    }
+
+    .theme-toggle {
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      font-size: 11px;
+      color: var(--muted);
+      cursor: pointer;
+      background: #020617;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .theme-toggle span {
+      font-size: 14px;
+    }
+
+    main {
+      padding-top: 24px;
+    }
+
+    section {
+      padding: 40px 0 32px;
+      scroll-margin-top: 76px;
+    }
+
+    .section-label {
+      font-size: 12px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--accent-strong);
       margin-bottom: 4px;
     }
 
-    .history-exp {
-      opacity: 0.8;
+    .section-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 18px;
     }
 
-    .history-res {
-      font-weight: 500;
+    .section-desc {
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 680px;
+      margin-bottom: 20px;
     }
 
-    /* Scrollbar kecil agar rapi */
-    .history::-webkit-scrollbar {
-      width: 4px;
+    /* ===== HERO ===== */
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.2fr);
+      align-items: center;
+      gap: 32px;
+      padding-top: 24px;
     }
-    .history::-webkit-scrollbar-thumb {
-      background: #555;
-      border-radius: 4px;
+
+    .hero-title {
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    .hero-name {
+      background: linear-gradient(120deg, #a855f7, #6366f1, #22d3ee);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-tagline {
+      font-size: 15px;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .badge {
+      font-size: 11px;
+      border-radius: 999px;
+      padding: 5px 9px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      color: var(--muted);
+    }
+
+    .badge.accent {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      color: var(--text);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 13px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.18s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(120deg, #4f46e5, #6366f1);
+      border-color: #4f46e5;
+      color: white;
+      box-shadow: 0 8px 25px rgba(79, 70, 229, 0.45);
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.05);
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      border-color: var(--border);
+      background: rgba(15,23,42,0.8);
+      color: var(--muted);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      color: var(--text);
+    }
+
+    .hero-mini {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .hero-photo-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 320px;
+      margin-left: auto;
+    }
+
+    .hero-photo-border {
+      border-radius: 28px;
+      padding: 4px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      background: radial-gradient(circle at 0 0, rgba(56,189,248,0.28), transparent 55%);
+    }
+
+    .hero-photo {
+      border-radius: 24px;
+      overflow: hidden;
+    }
+
+    .hero-photo img {
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .hero-chip {
+      position: absolute;
+      right: -16px;
+      bottom: 24px;
+      background: rgba(15,23,42,0.95);
+      border-radius: 18px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      padding: 8px 12px;
+      font-size: 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.7);
+    }
+
+    .hero-chip strong {
+      font-size: 12px;
+    }
+
+    /* ===== CARDS & GRID ===== */
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.6fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: linear-gradient(135deg, rgba(15,23,42,0.98), rgba(15,23,42,0.98));
+      border-radius: 20px;
+      padding: 16px 18px;
+      border: 1px solid rgba(55,65,81,0.9);
+      box-shadow: 0 14px 40px rgba(15, 23, 42, 0.8);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      gap: 8px;
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .card-tag {
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: rgba(15,23,42,1);
+      border: 1px solid rgba(75,85,99,0.9);
+      color: var(--muted);
+    }
+
+    .card-body {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .info-table td {
+      padding: 3px 0;
+      vertical-align: top;
+    }
+
+    .info-table td:first-child {
+      width: 32%;
+      color: var(--muted);
+    }
+
+    .info-table td:nth-child(2) {
+      width: 4%;
+      color: var(--muted);
+    }
+
+    .info-table td:last-child {
+      color: var(--text);
+    }
+
+    /* ===== TIMELINE ===== */
+
+    .timeline {
+      position: relative;
+      margin-top: 4px;
+      padding-left: 18px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: 4px;
+      bottom: 4px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      opacity: 0.7;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 12px;
+      margin-bottom: 14px;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -4px;
+      top: 4px;
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      border: 2px solid var(--accent);
+      background: #020617;
+    }
+
+    .timeline-title {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .timeline-sub {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .timeline-meta {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* ===== TAG LIST ===== */
+
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .pill {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(75,85,99,0.9);
+      color: var(--muted);
+      background: rgba(15,23,42,1);
+    }
+
+    /* ===== KARYA TULIS & DOKUMEN ===== */
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.8fr);
+      gap: 20px;
+    }
+
+    .project-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .project-meta {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .project-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .project-badge {
+      font-size: 11px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(75,85,99,0.9);
+      color: var(--muted);
+    }
+
+    iframe.pdf-viewer {
+      width: 100%;
+      min-height: 260px;
+      border-radius: 18px;
+      border: 1px solid rgba(55,65,81,0.9);
+      background: #020617;
+    }
+
+    .task-list {
+      list-style: none;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .task-list li {
+      padding: 6px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px dashed rgba(31,41,55,0.8);
+    }
+
+    .task-name {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .task-name span:first-child {
+      color: var(--text);
+    }
+
+    .task-meta {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .task-link {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(75,85,99,0.9);
+      cursor: pointer;
+    }
+
+    .task-link:hover {
+      border-color: var(--accent);
+      color: var(--accent-strong);
+    }
+
+    /* ===== GALERI ===== */
+
+    .gallery-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .filter-btn {
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 11px;
+      border: 1px solid rgba(75,85,99,0.9);
+      background: rgba(15,23,42,1);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.16s ease;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      color: var(--text);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 18px;
+      border: 1px solid rgba(55,65,81,0.9);
+      background: #020617;
+      cursor: zoom-in;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+      transition: transform 0.25s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+
+    .gallery-label {
+      position: absolute;
+      left: 8px;
+      bottom: 8px;
+      padding: 3px 7px;
+      font-size: 11px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.88);
+      color: var(--muted);
+      border: 1px solid rgba(55,65,81,0.9);
+    }
+
+    /* Modal gambar besar */
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,0.92);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 70;
+    }
+
+    .modal.open {
+      display: flex;
+    }
+
+    .modal-inner {
+      max-width: 900px;
+      width: 94%;
+      max-height: 90vh;
+      border-radius: 18px;
+      background: #020617;
+      padding: 10px;
+      border: 1px solid rgba(55,65,81,0.9);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .modal-inner img {
+      max-height: 72vh;
+      margin: 0 auto;
+      border-radius: 12px;
+      object-fit: contain;
+    }
+
+    .modal-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .modal-close {
+      font-size: 13px;
+      cursor: pointer;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(75,85,99,0.9);
+    }
+
+    .modal-close:hover {
+      border-color: var(--accent);
+      color: var(--accent-strong);
+    }
+
+    /* ===== KONTAK ===== */
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.4fr);
+      gap: 22px;
+    }
+
+    .contact-list {
+      list-style: none;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .contact-list li {
+      margin-bottom: 8px;
+    }
+
+    .footer-note {
+      margin-top: 16px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    footer {
+      border-top: 1px solid rgba(30,64,175,0.6);
+      padding: 12px 16px 18px;
+      margin-top: 24px;
+      text-align: center;
+      font-size: 11px;
+      color: var(--muted);
+      background: rgba(2,6,23,0.98);
+    }
+
+    /* ===== SCROLL TO TOP ===== */
+
+    .scroll-top {
+      position: fixed;
+      right: 16px;
+      bottom: 18px;
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      border: 1px solid rgba(55,65,81,0.95);
+      background: rgba(15,23,42,0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.16s ease;
+      color: var(--muted);
+      z-index: 60;
+    }
+
+    .scroll-top.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .scroll-top:hover {
+      border-color: var(--accent);
+      color: var(--accent-strong);
+    }
+
+    /* ===== RESPONSIVE ===== */
+
+    @media (max-width: 840px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .hero-photo-wrap {
+        margin: 0 auto;
+        order: -1;
+      }
+      .hero-chip {
+        right: 8px;
+      }
+
+      .grid-2,
+      .project-grid,
+      .contact-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-menu {
+        display: none;
+      }
+      .hero-title {
+        font-size: 26px;
+      }
+      section {
+        padding: 32px 0 26px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="calculator">
-    <div class="calc-header">
-      <div class="calc-title">Kalkulator Kompleks</div>
-      <div class="memory-indicator" id="memoryIndicator">Mem: 0</div>
+  <header>
+    <nav class="nav">
+      <div class="nav-left">
+        <div class="nav-logo">DR</div>
+        <div>
+          <div class="nav-title">Djibril Sepri Ramadhan</div>
+          <div class="nav-sub">Siswa SMA | Calon TI UNILA</div>
+        </div>
+      </div>
+
+      <div class="nav-menu">
+        <a href="#home" class="active">Beranda</a>
+        <a href="#about">Profil</a>
+        <a href="#education">Pendidikan</a>
+        <a href="#experience">Pengalaman</a>
+        <a href="#projects">Karya Tulis</a>
+        <a href="#gallery">Galeri</a>
+        <a href="#documents">Dokumen</a>
+        <a href="#contact">Kontak</a>
+      </div>
+
+      <button id="themeToggle" class="theme-toggle" type="button">
+        <span>☾</span> Mode gelap
+      </button>
+    </nav>
+  </header>
+
+  <main class="wrapper">
+    <!-- ============ HERO / BERANDA ============ -->
+    <section id="home">
+      <div class="hero">
+        <div>
+          <div class="hero-title">
+            Halo, saya <span class="hero-name">Djibril Sepri Ramadhan</span>
+          </div>
+          <div class="hero-tagline">
+            Siswa <strong>XII MIPA Al-Battani</strong> di SMA Muhammadiyah Ahmad Dahlan Metro,
+            dengan minat di <strong>keamanan sistem operasi, komputer, dan pemrograman</strong>.
+            Setelah lulus SMA tahun 2025, saya berencana melanjutkan studi di
+            <strong>Teknik Informatika Universitas Lampung (UNILA)</strong>.
+          </div>
+
+          <div class="hero-badges">
+            <span class="badge accent">Calon Mahasiswa Teknik Informatika UNILA</span>
+            <span class="badge">Anggota tim olimpiade matematika SMA</span>
+            <span class="badge">Penulis Karya Tulis Ilmiah tentang Windows & Linux</span>
+          </div>
+
+          <div class="hero-actions">
+            <a href="#projects" class="btn btn-primary">
+              Lihat Karya Tulis
+            </a>
+            <a href="#documents" class="btn btn-ghost">
+              Lihat Dokumen & Tugas
+            </a>
+          </div>
+
+          <div class="hero-mini">
+            Gulir ke bawah untuk melihat profil lengkap, riwayat pendidikan, dan koleksi tugas/hasil karya.
+          </div>
+        </div>
+
+        <div class="hero-photo-wrap">
+          <div class="hero-photo-border">
+            <div class="hero-photo">
+              <!-- Ganti src ini dengan foto formal kamu -->
+              <img src="img/foto-formal.jpg" alt="Foto formal Djibril Sepri Ramadhan" />
+            </div>
+          </div>
+          <div class="hero-chip">
+            <strong>SMA Muhammadiyah Ahmad Dahlan Metro</strong>
+            <span>XII MIPA • Lulus 2025</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROFIL ============ -->
+    <section id="about">
+      <div class="section-label">Profil</div>
+      <div class="section-title">Tentang Saya</div>
+      <p class="section-desc">
+        Saya adalah Djibril Sepri Ramadhan, lahir pada <strong>26 Agustus 2006</strong>.
+        Saya tertarik pada dunia komputer, terutama <strong>sistem operasi, keamanan sistem</strong>,
+        dan cara kerja teknologi di balik perangkat yang kita gunakan sehari-hari.
+      </p>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Biodata</div>
+            <div class="card-tag">CV singkat</div>
+          </div>
+          <div class="card-body">
+            <table class="info-table">
+              <tr>
+                <td>Nama</td><td>:</td><td>Djibril Sepri Ramadhan</td>
+              </tr>
+              <tr>
+                <td>Nama panggilan</td><td>:</td><td>Djibril</td>
+              </tr>
+              <tr>
+                <td>Tanggal lahir</td><td>:</td><td>26 Agustus 2006</td>
+              </tr>
+              <tr>
+                <td>Pendidikan saat ini</td><td>:</td>
+                <td>SMA Muhammadiyah Ahmad Dahlan Metro (XII MIPA)</td>
+              </tr>
+              <tr>
+                <td>Tahun lulus SMA</td><td>:</td><td>2025</td>
+              </tr>
+              <tr>
+                <td>Rencana studi</td><td>:</td>
+                <td>Teknik Informatika, Universitas Lampung (UNILA)</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Minat & Fokus Belajar</div>
+            <div class="card-tag">Goal ke depan</div>
+          </div>
+          <div class="card-body">
+            <p>
+              Fokus belajar saya saat ini adalah memperdalam:
+            </p>
+            <ul style="margin: 10px 0 4px 18px; font-size: 13px; color: var(--muted);">
+              <li>Dasar-dasar <strong>pemrograman</strong> dan logika algoritma.</li>
+              <li><strong>Sistem operasi</strong> dan perbandingan fitur keamanannya.</li>
+              <li>Matematika (terutama yang mendukung ilmu komputer & statistik).</li>
+            </ul>
+            <p style="margin-top: 8px;">
+              Saya juga mengembangkan soft skill seperti belajar mandiri,
+              kerja tim, dan presentasi melalui tugas proyek dan karya tulis ilmiah.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PENDIDIKAN ============ -->
+    <section id="education">
+      <div class="section-label">Riwayat</div>
+      <div class="section-title">Pendidikan</div>
+      <p class="section-desc">
+        Perjalanan pendidikan formal saya dimulai dari SD Muhammadiyah Metro Pusat, sampai
+        sekarang di SMA Muhammadiyah Ahmad Dahlan Metro, jurusan MIPA.
+      </p>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Timeline Pendidikan</div>
+          <div class="card-tag">2012 - 2025</div>
+        </div>
+        <div class="card-body">
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-title">SMA Muhammadiyah Ahmad Dahlan Metro</div>
+              <div class="timeline-sub">Jurusan MIPA • XII MIPA Al-Battani</div>
+              <div class="timeline-meta">2022 – 2025 (Lulus)</div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-title">SMP Muhammadiyah Ahmad Dahlan Metro</div>
+              <div class="timeline-meta">2019 – 2022</div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-title">SD Muhammadiyah Metro Pusat</div>
+              <div class="timeline-meta">2012 – 2019</div>
+            </div>
+          </div>
+
+          <div class="pill-list">
+            <span class="pill">Lingkungan Muhammadiyah</span>
+            <span class="pill">Fokus Sains & Matematika</span>
+            <span class="pill">Aktif tugas proyek & KTI</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PENGALAMAN & MINAT AKADEMIK ============ -->
+    <section id="experience">
+      <div class="section-label">Aktivitas</div>
+      <div class="section-title">Pengalaman & Minat Akademik</div>
+      <p class="section-desc">
+        Selain pembelajaran di kelas, saya mengikuti berbagai kegiatan yang
+        membantu mengasah kemampuan berpikir logis, menganalisis masalah, dan
+        bekerja dalam tim.
+      </p>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Pengalaman</div>
+            <div class="card-tag">Di bangku SMA</div>
+          </div>
+          <div class="card-body">
+            <ul style="margin-left: 18px; font-size: 13px;">
+              <li>Anggota tim <strong>Olimpiade Matematika</strong> sekolah.</li>
+              <li>Mengikuti beberapa lomba di tingkat kota.</li>
+              <li>
+                Menyusun <strong>Karya Tulis Ilmiah</strong> yang menganalisis
+                perbedaan fitur keamanan antara sistem operasi
+                <em>Windows</em> dan <em>Linux</em>.
+              </li>
+            </ul>
+            <p style="margin-top: 10px;">
+              Pengalaman ini membuat saya terbiasa membaca referensi, menganalisis data,
+              dan menyusun laporan ilmiah dengan struktur yang baik.
+            </p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Minat ke Depan</div>
+            <div class="card-tag">Arah karier</div>
+          </div>
+          <div class="card-body">
+            <p>
+              Dengan melanjutkan studi di <strong>Teknik Informatika UNILA</strong>,
+              saya ingin mengembangkan diri di bidang:
+            </p>
+            <ul style="margin: 10px 0 4px 18px; font-size: 13px; color: var(--muted);">
+              <li>Keamanan siber & keamanan sistem operasi.</li>
+              <li>Pengembangan perangkat lunak dan aplikasi.</li>
+              <li>Analisis data & log sistem.</li>
+            </ul>
+            <p style="margin-top: 8px;">
+              Saya percaya kombinasi kemampuan logika dari matematika dan pemahaman
+              komputer akan sangat berguna untuk berkontribusi di dunia teknologi.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ KARYA TULIS & DOKUMEN UTAMA ============ -->
+    <section id="projects">
+      <div class="section-label">Karya</div>
+      <div class="section-title">Karya Tulis Ilmiah</div>
+      <p class="section-desc">
+        Karya Tulis Ilmiah ini membahas perbedaan fitur keamanan antara sistem operasi
+        Windows dan Linux, membandingkan pendekatan keamanan, kelebihan, kekurangan,
+        dan dampaknya terhadap pengguna sehari-hari maupun skala besar.
+      </p>
+
+      <div class="card">
+        <div class="project-grid">
+          <div>
+            <div class="project-title">
+              Analisis Perbedaan Sistem Operasional Windows dengan Linux Terkait Fitur Keamanan
+            </div>
+            <div class="project-meta">
+              Karya Tulis Ilmiah • Program MIPA, XII MIPA Al-Battani,
+              SMA Muhammadiyah Ahmad Dahlan Metro (2024)
+            </div>
+            <p style="font-size: 13px; color: var(--muted); margin-bottom: 6px;">
+              Penelitian ini menganalisis bagaimana <strong>Windows</strong> dan
+              <strong>Linux</strong> menerapkan fitur keamanan seperti autentikasi,
+              kontrol akses, enkripsi, firewall, hingga update sistem. Tujuannya adalah
+              membantu pengguna memahami perbedaan dan memilih sistem operasi yang
+              paling sesuai dengan kebutuhan keamanannya.
+            </p>
+
+            <div class="project-actions">
+              <!-- Ganti href berikut dengan lokasi PDF KTI kamu -->
+              <a class="btn btn-primary" href="docs/kti-djibril.pdf" target="_blank">
+                📄 Buka KTI (PDF)
+              </a>
+              <a class="btn btn-ghost" href="docs/kti-djibril.pdf" download>
+                ⬇️ Unduh KTI
+              </a>
+              <span class="project-badge">Metode: Studi pustaka & analisis kualitatif</span>
+            </div>
+          </div>
+
+          <div>
+            <!-- Viewer PDF (pastikan nama & lokasi file sesuai) -->
+            <iframe
+              class="pdf-viewer"
+              src="docs/kti-djibril.pdf#toolbar=0&navpanes=0&scrollbar=0"
+              title="Karya Tulis Ilmiah Djibril">
+            </iframe>
+            <p style="font-size: 11px; color: var(--muted); margin-top: 6px;">
+              Jika PDF tidak muncul, pastikan file <code>kti-djibril.pdf</code> berada di folder
+              <code>docs/</code> dan browser mendukung tampilan PDF.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ GALERI FOTO ============ -->
+    <section id="gallery">
+      <div class="section-label">Galeri</div>
+      <div class="section-title">Foto Saya</div>
+      <p class="section-desc">
+        Beberapa dokumentasi kegiatan dan momen penting selama bersekolah, mulai dari
+        foto formal hingga suasana wisuda/penyerahan penghargaan.
+      </p>
+
+      <div class="gallery-filters">
+        <button class="filter-btn active" data-filter="all">Semua</button>
+        <button class="filter-btn" data-filter="formal">Formal</button>
+        <button class="filter-btn" data-filter="santai">Santai</button>
+        <button class="filter-btn" data-filter="acara">Acara / Penghargaan</button>
+      </div>
+
+      <div class="gallery-grid" id="galleryGrid">
+        <!-- Ganti src dengan nama file fotomu sendiri -->
+        <div class="gallery-item" data-type="formal">
+          <img src="img/foto-formal.jpg" alt="Foto formal Djibril" />
+          <div class="gallery-label">Foto Formal</div>
+        </div>
+
+        <div class="gallery-item" data-type="santai">
+          <img src="img/foto-studio-duduk.jpg" alt="Foto studio santai" />
+          <div class="gallery-label">Foto Santai di Studio</div>
+        </div>
+
+        <div class="gallery-item" data-type="acara">
+          <img src="img/foto-wisuda-1.jpg" alt="Djibril memegang sertifikat" />
+          <div class="gallery-label">Penerimaan Penghargaan</div>
+        </div>
+
+        <div class="gallery-item" data-type="acara">
+          <img src="img/foto-wisuda-2.jpg" alt="Djibril di acara kelulusan" />
+          <div class="gallery-label">Acara Kelulusan</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modal tampilan besar foto -->
+    <div class="modal" id="imageModal">
+      <div class="modal-inner">
+        <div class="modal-top">
+          <span id="modalCaption">Foto</span>
+          <button class="modal-close" type="button" id="modalClose">Tutup ✕</button>
+        </div>
+        <img id="modalImage" src="" alt="Foto besar" />
+      </div>
     </div>
-    <input type="text" id="display" placeholder="0" readonly />
 
-    <div class="buttons">
-      <!-- Baris fungsi ilmiah -->
-      <button class="fn" onclick="appendToDisplay('sin(')">sin</button>
-      <button class="fn" onclick="appendToDisplay('cos(')">cos</button>
-      <button class="fn" onclick="appendToDisplay('tan(')">tan</button>
-      <button class="fn" onclick="appendToDisplay('log(')">log</button>
-      <button class="fn" onclick="appendToDisplay('ln(')">ln</button>
+    <!-- ============ DOKUMEN / TUGAS ============ -->
+    <section id="documents">
+      <div class="section-label">Dokumen</div>
+      <div class="section-title">Tugas & File</div>
+      <p class="section-desc">
+        Di sini kamu bisa mengumpulkan file-file penting seperti KTI, laporan tugas,
+        atau portofolio lain dalam bentuk PDF/Word yang dapat dilihat langsung dari website.
+        Contoh di bawah bisa kamu ganti dengan tugas asli kamu.
+      </p>
 
-      <!-- Baris fungsi lain -->
-      <button class="fn" onclick="appendToDisplay('√(')">√</button>
-      <button class="fn" onclick="appendToDisplay('^')">xʸ</button>
-      <button class="fn" onclick="square()">x²</button>
-      <button class="fn" onclick="inverse()">1/x</button>
-      <button class="fn" onclick="appendToDisplay('%')">%</button>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Daftar Dokumen</div>
+          <div class="card-tag">Contoh struktur</div>
+        </div>
+        <div class="card-body">
+          <ul class="task-list">
+            <li>
+              <div class="task-name">
+                <span>Karya Tulis Ilmiah – Windows vs Linux</span>
+                <span class="task-meta">Jenis: Tugas Akhir SMA • Format: PDF</span>
+              </div>
+              <a class="task-link" href="docs/kti-djibril.pdf" target="_blank">Lihat</a>
+            </li>
+            <li>
+              <div class="task-name">
+                <span>Tugas (contoh) – Laporan Praktikum Komputer</span>
+                <span class="task-meta">Ganti link ini dengan file tugasmu, misalnya <code>docs/praktikum-komputer.pdf</code></span>
+              </div>
+              <a class="task-link" href="docs/praktikum-komputer.pdf" target="_blank">Lihat</a>
+            </li>
+            <li>
+              <div class="task-name">
+                <span>Tugas (contoh) – Latihan Pemrograman Dasar</span>
+                <span class="task-meta">Bisa berupa PDF, Word, atau link ke GitHub</span>
+              </div>
+              <a class="task-link" href="docs/tugas-pemrograman.pdf" target="_blank">Lihat</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-      <!-- Baris memori -->
-      <button class="memory" onclick="memoryAdd()">M+</button>
-      <button class="memory" onclick="memorySubtract()">M-</button>
-      <button class="memory" onclick="memoryRecall()">MR</button>
-      <button class="memory" onclick="memoryClear()">MC</button>
-      <button class="fn" onclick="appendToDisplay('π')">π</button>
+    <!-- ============ KONTAK ============ -->
+    <section id="contact">
+      <div class="section-label">Kontak</div>
+      <div class="section-title">Hubungi Saya</div>
+      <p class="section-desc">
+        Halaman ini bisa kamu bagikan ke guru, teman, atau panitia lomba untuk melihat
+        profil dan karya kamu. Lengkapi bagian kontak di bawah dengan data asli kamu.
+      </p>
 
-      <!-- Baris control -->
-      <button class="ac" onclick="clearDisplay()">AC</button>
-      <button onclick="backspace()">⌫</button>
-      <button class="fn" onclick="appendToDisplay('(')">(</button>
-      <button class="fn" onclick="appendToDisplay(')')">)</button>
-      <button class="operator" onclick="appendToDisplay('/')">÷</button>
+      <div class="contact-grid">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Informasi Kontak</div>
+            <div class="card-tag">Editable</div>
+          </div>
+          <div class="card-body">
+            <ul class="contact-list">
+              <li><strong>Email:</strong> <span style="color: var(--muted);">emailkamu@contoh.com</span></li>
+              <li><strong>Instagram:</strong> <span style="color: var(--muted);">@username_ig_kamu</span></li>
+              <li><strong>WhatsApp:</strong> <span style="color: var(--muted);">08xx-xxxx-xxxx</span></li>
+              <li><strong>Alamat domisili:</strong> <span style="color: var(--muted);">Bandar Lampung / Metro (isi sesuai)</span></li>
+            </ul>
+            <p style="font-size: 12px; color: var(--muted); margin-top: 12px;">
+              Ganti data di atas langsung di file <code>index.html</code> agar sesuai dengan informasi kontak kamu.
+            </p>
+          </div>
+        </div>
 
-      <!-- Angka & operator -->
-      <button onclick="appendToDisplay('7')">7</button>
-      <button onclick="appendToDisplay('8')">8</button>
-      <button onclick="appendToDisplay('9')">9</button>
-      <button class="operator" onclick="appendToDisplay('*')">×</button>
-      <button class="fn" onclick="appendToDisplay('e')">e</button>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Catatan</div>
+            <div class="card-tag">Untuk pengunjung</div>
+          </div>
+          <div class="card-body" style="font-size: 13px; color: var(--muted);">
+            <p>
+              Website ini dirancang sebagai CV digital dan portofolio sederhana
+              yang berisi:
+            </p>
+            <ul style="margin: 8px 0 4px 18px;">
+              <li>Biodata dan riwayat pendidikan.</li>
+              <li>Karya Tulis Ilmiah dan dokumen penting lainnya.</li>
+              <li>Galeri foto kegiatan dan penghargaan.</li>
+            </ul>
+            <p style="margin-top: 8px;">
+              Silakan menghubungi saya melalui kontak di samping jika ingin mengetahui
+              lebih lanjut mengenai tugas, proyek, atau kerja sama lainnya.
+            </p>
+          </div>
+        </div>
+      </div>
 
-      <button onclick="appendToDisplay('4')">4</button>
-      <button onclick="appendToDisplay('5')">5</button>
-      <button onclick="appendToDisplay('6')">6</button>
-      <button class="operator" onclick="appendToDisplay('-')">−</button>
-      <button class="fn" onclick="toggleSign()">±</button>
+      <div class="footer-note">
+        Tip: kamu bisa meng‑hosting halaman ini di GitHub Pages / Netlify supaya bisa diakses online.
+      </div>
+    </section>
+  </main>
 
-      <button onclick="appendToDisplay('1')">1</button>
-      <button onclick="appendToDisplay('2')">2</button>
-      <button onclick="appendToDisplay('3')">3</button>
-      <button class="operator" onclick="appendToDisplay('+')">+</button>
-      <button onclick="appendToDisplay('0')">0</button>
+  <button id="scrollTop" class="scroll-top" type="button">↑</button>
 
-      <!-- Baris terakhir -->
-      <button onclick="appendToDisplay('.')">.</button>
-      <button class="equal" onclick="calculate()">=</button>
-    </div>
-
-    <div class="history" id="history"></div>
-  </div>
+  <footer>
+    © <span id="year"></span> Djibril Sepri Ramadhan. Dibuat sebagai CV & portofolio pribadi.
+  </footer>
 
   <script>
-    const display = document.getElementById('display');
-    const historyContainer = document.getElementById('history');
-    const memoryIndicator = document.getElementById('memoryIndicator');
+    // ===== Tahun di footer =====
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-    let memory = 0;
+    // ===== Highlight menu saat scroll =====
+    const sections = document.querySelectorAll('main section[id]');
+    const navLinks = document.querySelectorAll('.nav-menu a');
 
-    function appendToDisplay(value) {
-      // Jika sebelumnya hasil error, clear dulu
-      if (display.value === 'Error') display.value = '';
-      display.value += value;
-    }
-
-    function clearDisplay() {
-      display.value = '';
-    }
-
-    function backspace() {
-      if (display.value === 'Error') {
-        display.value = '';
-      } else {
-        display.value = display.value.slice(0, -1);
-      }
-    }
-
-    function toggleSign() {
-      if (!display.value) return;
-      if (display.value.startsWith('-')) {
-        display.value = display.value.slice(1);
-      } else {
-        display.value = '-' + display.value;
-      }
-    }
-
-    function square() {
-      if (!display.value) return;
-      try {
-        const val = safeEvaluate(display.value);
-        display.value = val * val;
-        addHistory(`${val}²`, display.value);
-      } catch (e) {
-        display.value = 'Error';
-      }
-    }
-
-    function inverse() {
-      if (!display.value) return;
-      try {
-        const val = safeEvaluate(display.value);
-        if (val === 0) {
-          display.value = 'Error';
-          return;
+    window.addEventListener('scroll', () => {
+      const scrollPos = window.scrollY + 90;
+      sections.forEach(sec => {
+        if (scrollPos >= sec.offsetTop && scrollPos < sec.offsetTop + sec.offsetHeight) {
+          navLinks.forEach(link => link.classList.remove('active'));
+          const active = document.querySelector('.nav-menu a[href="#' + sec.id + '"]');
+          if (active) active.classList.add('active');
         }
-        display.value = 1 / val;
-        addHistory(`1/(${val})`, display.value);
-      } catch (e) {
-        display.value = 'Error';
+      });
+    });
+
+    // ===== Scroll to top button =====
+    const scrollTopBtn = document.getElementById('scrollTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 240) {
+        scrollTopBtn.classList.add('visible');
+      } else {
+        scrollTopBtn.classList.remove('visible');
       }
-    }
+    });
+    scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-    function toRad(deg) {
-      return deg * Math.PI / 180;
-    }
+    // ===== Filter galeri =====
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const galleryItems = document.querySelectorAll('.gallery-item');
 
-    function preprocessExpression(exp) {
-      // Ganti simbol-simbol agar bisa dihitung JavaScript
-      let expr = exp;
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.dataset.filter;
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
 
-      // Akar
-      expr = expr.replace(/√\(/g, 'Math.sqrt(');
+        galleryItems.forEach(item => {
+          const type = item.dataset.type;
+          if (filter === 'all' || filter === type) {
+            item.style.display = '';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
 
-      // Konstanta
-      expr = expr.replace(/π/g, 'Math.PI');
+    // ===== Modal foto besar =====
+    const imageModal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImage');
+    const modalCaption = document.getElementById('modalCaption');
+    const modalClose = document.getElementById('modalClose');
 
-      // Penting: jangan asal ganti 'e' karena bisa merusak angka seperti '1e5'
-      // Ganti ' e ' atau '(e' atau '+e' dst dengan Math.E
-      expr = expr.replace(/(^|[^0-9a-zA-Z_])e([^0-9a-zA-Z_]|$)/g, '$1Math.E$2');
+    galleryItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const img = item.querySelector('img');
+        modalImg.src = img.src;
+        modalCaption.textContent = img.alt;
+        imageModal.classList.add('open');
+      });
+    });
 
-      // Trigonometri & log (dalam derajat untuk sin/cos/tan)
-      expr = expr.replace(/sin\(/g, 'Math.sin(toRad(');
-      expr = expr.replace(/cos\(/g, 'Math.cos(toRad(');
-      expr = expr.replace(/tan\(/g, 'Math.tan(toRad(');
+    modalClose.addEventListener('click', () => {
+      imageModal.classList.remove('open');
+    });
 
-      // log basis 10
-      expr = expr.replace(/log\(/g, 'Math.log10(');
-
-      // ln (log natural)
-      expr = expr.replace(/ln\(/g, 'Math.log(');
-
-      // Pangkat ^ menjadi **
-      expr = expr.replace(/\^/g, '**');
-
-      // Persen: ubah "x%" menjadi (x/100)
-      // contoh: 50% -> (50/100)
-      expr = expr.replace(/([0-9.]+)%/g, '($1/100)');
-
-      return expr;
-    }
-
-    function safeEvaluate(input) {
-      const expr = preprocessExpression(input);
-
-      // Cek karakter ilegal (hanya izinkan angka, operator, titik, kurung, huruf untuk fungsi)
-      if (!/^[0-9+\-*/%.()eE^π√\sA-Za-z]*$/.test(input)) {
-        throw new Error('Invalid characters');
+    imageModal.addEventListener('click', (e) => {
+      if (e.target === imageModal) {
+        imageModal.classList.remove('open');
       }
+    });
 
-      // Gunakan Function sebagai pengganti eval (tetap harus hati-hati di aplikasi nyata)
-      const fn = new Function('toRad', `return ${expr};`);
-      return fn(toRad);
-    }
+    // ===== Tema gelap / terang sederhana =====
+    const themeToggle = document.getElementById('themeToggle');
+    let darkMode = true;
 
-    function calculate() {
-      const expression = display.value;
-      if (!expression) return;
-      try {
-        const result = safeEvaluate(expression);
-        addHistory(expression, result);
-        display.value = result;
-      } catch (e) {
-        console.error(e);
-        display.value = 'Error';
+    themeToggle.addEventListener('click', () => {
+      darkMode = !darkMode;
+      if (darkMode) {
+        document.body.style.background = 'radial-gradient(circle at top, #111827 0, #020617 45%, #000 100%)';
+        themeToggle.innerHTML = '<span>☾</span> Mode gelap';
+      } else {
+        document.body.style.background = '#f9fafb';
+        themeToggle.innerHTML = '<span>☼</span> Mode terang';
       }
-    }
-
-    function addHistory(exp, res) {
-      const item = document.createElement('div');
-      item.className = 'history-item';
-
-      const expSpan = document.createElement('span');
-      expSpan.className = 'history-exp';
-      expSpan.textContent = exp;
-
-      const resSpan = document.createElement('span');
-      resSpan.className = 'history-res';
-      resSpan.textContent = res;
-
-      item.appendChild(expSpan);
-      item.appendChild(resSpan);
-      historyContainer.prepend(item);
-    }
-
-    // Fungsi memori
-    function memoryAdd() {
-      if (!display.value || display.value === 'Error') return;
-      try {
-        const val = safeEvaluate(display.value);
-        memory += val;
-        updateMemoryIndicator();
-      } catch (e) {
-        display.value = 'Error';
-      }
-    }
-
-    function memorySubtract() {
-      if (!display.value || display.value === 'Error') return;
-      try {
-        const val = safeEvaluate(display.value);
-        memory -= val;
-        updateMemoryIndicator();
-      } catch (e) {
-        display.value = 'Error';
-      }
-    }
-
-    function memoryRecall() {
-      display.value = memory.toString();
-    }
-
-    function memoryClear() {
-      memory = 0;
-      updateMemoryIndicator();
-    }
-
-    function updateMemoryIndicator() {
-      memoryIndicator.textContent = 'Mem: ' + memory;
-    }
+    });
   </script>
 </body>
 </html>
